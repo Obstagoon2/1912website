@@ -7,7 +7,7 @@ const noMoreMsg = document.getElementById('no-more-msg');
 
 let allEvents = [];
 let eventsDisplayed = 0;
-const EVENTS_PER_PAGE = 3;
+const EVENTS_PER_PAGE = 6;
 
 async function fetchCalendarEvents() {
   const url = `https://www.googleapis.com/calendar/v3/calendars/${encodeURIComponent(calendarId)}/events?key=${apiKey}&orderBy=startTime&singleEvents=true&timeMin=${new Date().toISOString()}`;
@@ -27,8 +27,13 @@ async function fetchCalendarEvents() {
 function formatDate(dateString) {
   const date = new Date(dateString);
   return date.toLocaleString('en-US', {
-    weekday: 'short', month: 'short', day: 'numeric',
-    year: 'numeric', hour: '2-digit', minute: '2-digit', hour12: true
+    weekday: 'short',
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: true
   });
 }
 
@@ -50,48 +55,61 @@ function cleanDescription(desc) {
   return desc.replace(/powered by Google Calendar/i, '').trim();
 }
 
+function createEventCard(event) {
+  const card = document.createElement('div');
+  card.classList.add('event-card');
+
+  const title = document.createElement('h3');
+  title.textContent = event.summary || 'Untitled Event';
+
+  const date = document.createElement('p');
+  const start = event.start.dateTime || event.start.date;
+  date.textContent = formatDate(start);
+
+  const location = document.createElement('p');
+  if (event.location) {
+    location.textContent = event.location;
+    card.appendChild(location);
+  }
+
+  const description = document.createElement('p');
+  if (event.description) {
+    description.textContent = cleanDescription(event.description);
+    card.appendChild(description);
+  }
+
+  const addBtn = document.createElement('a');
+  addBtn.href = createAddToCalendarLink(event);
+  addBtn.textContent = 'Add to Calendar';
+  addBtn.className = 'add-calendar-btn';
+  addBtn.target = '_blank';
+  addBtn.rel = 'noopener noreferrer';
+
+  card.appendChild(title);
+  card.appendChild(date);
+  card.appendChild(addBtn);
+
+  return card;
+}
+
 function displayNextEvents() {
-  const eventsToShow = allEvents.slice(eventsDisplayed, eventsDisplayed + EVENTS_PER_PAGE);
-  eventsToShow.forEach(event => {
-    const card = document.createElement('div');
-    card.classList.add('event-card');
-
-    const title = document.createElement('h3');
-    title.textContent = event.summary || 'Untitled Event';
-
-    const date = document.createElement('p');
-    const start = event.start.dateTime || event.start.date;
-    date.textContent = formatDate(start);
-
-    const location = document.createElement('p');
-    if (event.location) location.textContent = event.location;
-
-    const description = document.createElement('p');
-    if (event.description) description.textContent = cleanDescription(event.description);
-
-    const addBtn = document.createElement('a');
-    addBtn.href = createAddToCalendarLink(event);
-    addBtn.textContent = 'Add to Calendar';
-    addBtn.className = 'add-calendar-btn';
-    addBtn.target = '_blank';
-    addBtn.rel = 'noopener noreferrer';
-
-    card.appendChild(title);
-    card.appendChild(date);
-    if (event.location) card.appendChild(location);
-    if (event.description) card.appendChild(description);
-    card.appendChild(addBtn);
-
+  const nextEvents = allEvents.slice(eventsDisplayed, eventsDisplayed + EVENTS_PER_PAGE);
+  nextEvents.forEach(event => {
+    const card = createEventCard(event);
     calendarEventsContainer.appendChild(card);
   });
 
-  eventsDisplayed += EVENTS_PER_PAGE;
+  eventsDisplayed += nextEvents.length;
 
   if (eventsDisplayed >= allEvents.length) {
-    loadMoreBtn.style.display = 'none';
     noMoreMsg.style.display = 'block';
+  } else {
+    noMoreMsg.style.display = 'none';
   }
 }
 
+// Always show the button — never hide it
+loadMoreBtn.style.display = 'block';
 loadMoreBtn.addEventListener('click', displayNextEvents);
+
 fetchCalendarEvents();
