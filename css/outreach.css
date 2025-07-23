@@ -218,7 +218,7 @@
 /* Dynamic Events Grid */
 #calendar-events {
   display: grid;
-  grid-template-columns: repeat(2, 1fr); /* one less than 3 */
+  grid-template-columns: repeat(2, 1fr); /* reduced by 1 from 3 */
   gap: 1.5rem;
   padding: 1rem 0;
 }
