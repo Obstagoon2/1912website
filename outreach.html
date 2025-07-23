@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="css/animations.css" />
     <script src="https://unpkg.com/scrollreveal@4.1.0/dist/scrollreveal.min.js" defer></script>
     <script src="js/main.js" defer></script>
-    <script src="js/calendar.js" defer></script>
+    <script src="js/calendar-events.js" defer></script>
 </head>
 <body>
     <header>
@@ -27,6 +27,7 @@
                 <a href="robots.html">ROBOTS</a>
                 <a href="sponsors.html">SPONSORS</a>
                 <a href="awards.html">AWARDS</a>
+                <a href="contact.html">CONTACT</a>
             </nav>
             <button id="hamburger-menu" aria-label="Open navigation menu" class="hamburger" type="button">
                 <span class="hamburger-bar"></span>
@@ -65,7 +66,7 @@
             </div>
 
             <div class="outreach-grid">
-                <!-- STEM Education -->
+                <!-- STEM Education Card -->
                 <div class="outreach-card">
                     <div class="outreach-image">
                         <img src="assets/static/outreach/stem-education.jpg" alt="STEM Education Programs" />
@@ -79,7 +80,7 @@
                     </div>
                 </div>
 
-                <!-- Mentorship Programs -->
+                <!-- Mentorship Programs Card -->
                 <div class="outreach-card">
                     <div class="outreach-image">
                         <img src="assets/static/outreach/mentorship.jpg" alt="Mentorship Programs" />
@@ -93,7 +94,7 @@
                     </div>
                 </div>
 
-                <!-- Community Events -->
+                <!-- Community Events Card -->
                 <div class="outreach-card">
                     <div class="outreach-image">
                         <img src="assets/static/outreach/community.jpg" alt="Community Events" />
@@ -109,10 +110,9 @@
             </div>
         </section>
 
-        <!-- Calendar Section -->
         <section class="calendar-section">
-            <h2 class="calendar-title">Upcoming Events</h2>
-            <p class="calendar-description">
+            <h2 class="calendar-title" style="text-align: center;">Upcoming Events</h2>
+            <p class="calendar-description" style="text-align: center; max-width: 700px; margin: 0 auto 2rem;">
                 Stay updated with our latest outreach events, competitions, and community activities.
             </p>
             <div id="calendar-events" class="calendar-grid"></div>
