@@ -7,11 +7,16 @@
     <meta name="theme-color" content="#2498DC">
     <link rel="shortcut icon" href="assets/frc1912.ico">
     <title>Outreach - Team 1912 Combustion</title>
+
+    <!-- Stylesheets -->
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/outreach.css">
     <link rel="stylesheet" href="css/animations.css">
+
+    <!-- Scripts -->
     <script src="https://unpkg.com/scrollreveal@4.1.0/dist/scrollreveal.min.js" defer></script>
     <script src="js/main.js" defer></script>
+    <script src="js/calendar.js" defer></script>
 </head>
 <body>
     <header>
@@ -35,6 +40,7 @@
         </div>
     </header>
 
+    <!-- Social Media Sidebar -->
     <div class="social-icons">
         <a href="https://www.facebook.com/FRC1912" target="_blank" title="Facebook">
             <img src="assets/websites/facebook.png" alt="Facebook">
@@ -57,16 +63,16 @@
         <section class="outreach-section">
             <div class="page-header">
                 <h1>Community Outreach</h1>
-                <p class="page-description">Team 1912 is committed to inspiring the next generation of STEM leaders through community engagement,
-                    educational initiatives, and promoting robotics and technology throughout our community.</p>
+                <p class="page-description">Team 1912 is committed to inspiring the next generation of STEM leaders through community engagement, educational initiatives, and promoting robotics and technology throughout our community.</p>
             </div>
 
-            <!-- Outreach Photo Sections -->
+            <!-- Outreach Feature Sections -->
             <section class="about-section outreach-feature">
                 <div class="section-image">
                     <img src="assets/static/photos/women in stem day group photo.jpg" alt="Women in STEM Day group photo" class="feature-image">
                 </div>
             </section>
+
             <section class="about-section outreach-feature">
                 <div class="section-content">
                     <h2>A Learning Experience</h2>
@@ -77,13 +83,11 @@
                 </div>
             </section>
 
-            <!-- Calendar Section -->
+            <!-- Calendar Events Section -->
             <div class="calendar-section">
                 <h2 class="calendar-title">Upcoming Events</h2>
                 <p class="calendar-description">Stay updated with our latest outreach events, competitions, and community activities.</p>
-                <div class="calendar-container">
-                    <iframe src="https://calendar.google.com/calendar/embed?src=6a449goavfd8kttrni97hflte0tqj32f%40import.calendar.google.com&ctz=America%2FChicago" style="border: 0" width="800" height="600" frameborder="0" scrolling="no"></iframe>
-                </div>
+                <div id="event-cards" class="event-cards-container"></div>
             </div>
         </section>
     </main>
@@ -91,9 +95,7 @@
     <footer>
         <img src="assets/static/1912.png" alt="Team 1912 Logo" class="footer-logo">
         <p>&copy; 2025 FIRST Robotics Team 1912 - Combustion. All rights reserved.</p>
-<p>Contact us at 
-    <a href="mailto:team1912combustion@gmail.com">team1912combustion@gmail.com</a>
-  </p>
+        <p>Contact us at <a href="mailto:team1912combustion@gmail.com">team1912combustion@gmail.com</a></p>
     </footer>
 </body>
-</html> 
+</html>
