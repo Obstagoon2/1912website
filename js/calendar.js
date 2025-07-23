@@ -10,9 +10,8 @@ let displayedCount = 0;
 const EVENTS_PER_LOAD = 6;
 
 async function fetchCalendarEvents() {
-  const url = `https://www.googleapis.com/calendar/v3/calendars/${encodeURIComponent(calendarId)}/events?key=${apiKey}&orderBy=startTime&singleEvents=true&timeMin=${new Date().toISOString()}`;
-
   try {
+    const url = `https://www.googleapis.com/calendar/v3/calendars/${encodeURIComponent(calendarId)}/events?key=${apiKey}&orderBy=startTime&singleEvents=true&timeMin=${new Date().toISOString()}`;
     const response = await fetch(url);
     if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
     const data = await response.json();
@@ -40,7 +39,6 @@ function createAddToCalendarLink(event) {
   function formatDate(dateString) {
     if (!dateString) return '';
     const d = new Date(dateString);
-    // Format YYYYMMDDTHHmmssZ without punctuation for Google Calendar URL
     return d.toISOString().replace(/[-:]|\.\d{3}/g, '');
   }
 
@@ -96,23 +94,4 @@ function renderEventCard(event) {
 function loadMoreEvents() {
   const nextBatch = allEvents.slice(displayedCount, displayedCount + EVENTS_PER_LOAD);
   nextBatch.forEach(event => {
-    const card = renderEventCard(event);
-    calendarEventsContainer.appendChild(card);
-  });
-  displayedCount += nextBatch.length;
-
-  // Always show button
-  loadMoreBtn.style.display = 'inline-block';
-
-  if (displayedCount >= allEvents.length) {
-    loadMoreBtn.style.display = 'none';
-    noMoreMsg.style.display = 'block';
-  }
-}
-
-loadMoreBtn.addEventListener('click', () => {
-  loadMoreEvents();
-});
-
-// Initial fetch
-fetchCalendarEvents();
+    calendarEve
