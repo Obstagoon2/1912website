@@ -1,13 +1,12 @@
 const calendarId = 'ninq39q6r61rid4mot3h1ues5u3cmrdr@import.calendar.google.com';
 const apiKey = 'AIzaSyDFk7BVAYxUIngHdDOnVFD14XhnqdOSFDc';
-
 const calendarEventsContainer = document.getElementById('calendar-events');
 const loadMoreBtn = document.getElementById('load-more-btn');
 const noMoreMsg = document.getElementById('no-more-msg');
 
 let allEvents = [];
-let eventsDisplayed = 0;
-const EVENTS_PER_PAGE = 6;
+let displayedCount = 0;
+const EVENTS_PER_BATCH = 6;
 
 async function fetchCalendarEvents() {
   const url = `https://www.googleapis.com/calendar/v3/calendars/${encodeURIComponent(calendarId)}/events?key=${apiKey}&orderBy=startTime&singleEvents=true&timeMin=${new Date().toISOString()}`;
@@ -17,14 +16,14 @@ async function fetchCalendarEvents() {
     if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
     const data = await response.json();
     allEvents = data.items || [];
-    displayNextEvents();
+    displayNextBatch();
   } catch (error) {
     console.error('Failed to fetch calendar events:', error);
     calendarEventsContainer.innerHTML = '<p style="color:#ff6666;">Failed to load events.</p>';
   }
 }
 
-function formatDate(dateString) {
+function formatDateTime(dateString) {
   const date = new Date(dateString);
   return date.toLocaleString('en-US', {
     weekday: 'short',
@@ -37,6 +36,11 @@ function formatDate(dateString) {
   });
 }
 
+function cleanDescription(description) {
+  if (!description) return '';
+  return description.replace(/powered by Google Calendar/i, '').trim();
+}
+
 function createAddToCalendarLink(event) {
   const start = event.start.dateTime || event.start.date;
   const end = event.end.dateTime || event.end.date;
@@ -44,15 +48,8 @@ function createAddToCalendarLink(event) {
   const details = encodeURIComponent(event.description || '');
   const location = encodeURIComponent(event.location || '');
 
-  const startFormatted = new Date(start).toISOString().replace(/[-:]|\.\d{3}/g, '');
-  const endFormatted = new Date(end).toISOString().replace(/[-:]|\.\d{3}/g, '');
-
-  return `https://www.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${startFormatted}/${endFormatted}&details=${details}&location=${location}&sf=true&output=xml`;
-}
-
-function cleanDescription(desc) {
-  if (!desc) return '';
-  return desc.replace(/powered by Google Calendar/i, '').trim();
+  const formatDate = (str) => new Date(str).toISOString().replace(/[-:]|\.\d{3}/g, '');
+  return `https://www.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${formatDate(start)}/${formatDate(end)}&details=${details}&location=${location}&sf=true&output=xml`;
 }
 
 function createEventCard(event) {
@@ -63,53 +60,52 @@ function createEventCard(event) {
   title.textContent = event.summary || 'Untitled Event';
 
   const date = document.createElement('p');
-  const start = event.start.dateTime || event.start.date;
-  date.textContent = formatDate(start);
+  date.textContent = formatDateTime(event.start.dateTime || event.start.date);
 
   const location = document.createElement('p');
   if (event.location) {
     location.textContent = event.location;
-    card.appendChild(location);
   }
 
   const description = document.createElement('p');
-  if (event.description) {
-    description.textContent = cleanDescription(event.description);
-    card.appendChild(description);
+  const cleaned = cleanDescription(event.description);
+  if (cleaned) {
+    description.textContent = cleaned;
   }
 
   const addBtn = document.createElement('a');
   addBtn.href = createAddToCalendarLink(event);
   addBtn.textContent = 'Add to Calendar';
-  addBtn.className = 'add-calendar-btn';
+  addBtn.classList.add('add-calendar-btn');
   addBtn.target = '_blank';
   addBtn.rel = 'noopener noreferrer';
 
   card.appendChild(title);
   card.appendChild(date);
+  if (event.location) card.appendChild(location);
+  if (cleaned) card.appendChild(description);
   card.appendChild(addBtn);
 
   return card;
 }
 
-function displayNextEvents() {
-  const nextEvents = allEvents.slice(eventsDisplayed, eventsDisplayed + EVENTS_PER_PAGE);
-  nextEvents.forEach(event => {
+function displayNextBatch() {
+  const nextBatch = allEvents.slice(displayedCount, displayedCount + EVENTS_PER_BATCH);
+  nextBatch.forEach(event => {
     const card = createEventCard(event);
     calendarEventsContainer.appendChild(card);
   });
 
-  eventsDisplayed += nextEvents.length;
+  displayedCount += nextBatch.length;
 
-  if (eventsDisplayed >= allEvents.length) {
+  if (displayedCount >= allEvents.length) {
+    loadMoreBtn.style.display = 'none';
     noMoreMsg.style.display = 'block';
-  } else {
-    noMoreMsg.style.display = 'none';
   }
 }
 
-// Always show the button — never hide it
-loadMoreBtn.style.display = 'block';
-loadMoreBtn.addEventListener('click', displayNextEvents);
+// Event listener for "Load More Events"
+loadMoreBtn.addEventListener('click', displayNextBatch);
 
+// Fetch events on page load
 fetchCalendarEvents();
