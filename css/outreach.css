@@ -1,188 +1,328 @@
-/* === Outreach Page Styling === */
-
-/* Page Setup */
-body {
-  margin: 0;
-  padding: 0;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #111;
-  color: white;
-}
-
-/* Header */
-.page-header h1 {
-  font-size: 3rem;
-  color: #fff;
-  text-align: center;
-  margin: 2rem 0 1rem 0;
-}
-
-.page-description {
-  text-align: center;
-  font-size: 1.2rem;
-  color: rgba(255, 255, 255, 0.85);
-  margin-bottom: 3rem;
-  padding: 0 1rem;
-}
-
-/* Outreach Features */
-.outreach-feature {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  gap: 2rem;
-  padding: 3rem 2rem;
-}
-
-.outreach-feature:nth-child(even) {
-  flex-direction: row-reverse;
-}
-
-.section-image {
-  flex: 1;
-  max-width: 500px;
-}
-
-.feature-image {
-  width: 100%;
-  border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
-}
-
-.section-content {
-  flex: 1;
-  max-width: 500px;
-}
-
-.section-content h2 {
-  font-size: 2rem;
-  color: #fff;
-  margin-bottom: 1rem;
-}
-
-.section-content p {
-  font-size: 1.1rem;
-  color: rgba(255, 255, 255, 0.85);
-}
-
-/* === Calendar Section === */
-.calendar-section {
+/* Outreach Section Styles */
+.outreach-section {
+  max-width: 1800px;
+  margin: var(--header-height) auto 0;
   padding: 4rem 2rem;
-  background-color: #111;
   text-align: center;
+  background: linear-gradient(
+    to bottom,
+    rgba(11, 12, 16, 0.95),
+    rgba(31, 31, 31, 0.98)
+  );
+  color: white;
+  position: relative;
+  overflow: visible;
+  min-height: calc(100vh - var(--header-height));
+}
+
+/* Ambient gradient background */
+.outreach-section::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(
+      circle at 30% 30%,
+      rgba(36, 152, 220, 0.03) 0%,
+      transparent 80%
+    ),
+    radial-gradient(circle at 70% 70%, rgba(255, 131, 0, 0.03) 0%, transparent 80%);
+  pointer-events: none;
+  z-index: 0;
+  animation: gradientMove 20s ease-in-out infinite alternate;
+}
+
+.section-title,
+.page-header h1 {
+  text-align: center;
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  position: relative;
+  padding-bottom: 1rem;
+  font-family: "Nasalization", sans-serif;
+  background: linear-gradient(90deg, #2498dc, #ff8300);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
+  text-shadow: 0 0 20px rgba(36, 152, 220, 0.3);
+}
+
+.section-title::after,
+.page-header h1::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 150px;
+  height: 3px;
+  background: linear-gradient(90deg, #2498dc, #ff8300);
+  box-shadow: 0 0 10px rgba(36, 152, 220, 0.5);
+}
+
+.section-description,
+.page-header p {
+  text-align: center;
+  color: rgba(255, 255, 255, 0.9);
+  max-width: 800px;
+  margin: 0 auto 3rem auto;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  position: relative;
+  z-index: 1;
+}
+
+/* Outreach Grid */
+.outreach-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  position: relative;
+  z-index: 1;
+  padding: 2rem 0;
+}
+
+/* Outreach Cards */
+.outreach-card {
+  background: linear-gradient(
+    135deg,
+    rgba(36, 152, 220, 0.05) 0%,
+    rgba(26, 26, 26, 0.9) 50%,
+    rgba(255, 131, 0, 0.05) 100%
+  );
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 0 15px rgba(255, 131, 0, 0.1), 0 0 15px rgba(36, 152, 220, 0.1);
+  transition: all 0.3s ease;
+  border: 1px solid;
+  border-image: linear-gradient(
+      135deg,
+      rgba(36, 152, 220, 0.3),
+      rgba(255, 131, 0, 0.3)
+    )
+    1;
+  backdrop-filter: blur(5px);
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.outreach-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0 25px rgba(255, 131, 0, 0.2), 0 0 25px rgba(36, 152, 220, 0.2);
+}
+
+.outreach-image {
+  width: 100%;
+  height: 250px;
+  overflow: hidden;
+}
+
+.outreach-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.outreach-card:hover .outreach-image img {
+  transform: scale(1.05);
+}
+
+.outreach-content {
+  padding: 1.5rem;
+  text-align: left;
+}
+
+.outreach-content h2 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: #2498dc;
+  font-family: "Nasalization", sans-serif;
+}
+
+.outreach-content p {
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.6;
+  font-size: 1rem;
+}
+
+/* Responsive Outreach Grid */
+@media (max-width: 1200px) {
+  .outreach-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .outreach-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .section-title,
+  .page-header h1 {
+    font-size: 2.5rem;
+  }
+
+  .outreach-content h2 {
+    font-size: 1.3rem;
+  }
+}
+
+/* Calendar Section Styles */
+.calendar-section {
+  margin-top: 0;
+  padding: 2rem 0;
+  position: relative;
+  z-index: 1;
 }
 
 .calendar-title {
   font-size: 2.5rem;
-  color: #fff;
   margin-bottom: 1rem;
+  font-family: "Nasalization", sans-serif;
+  background: linear-gradient(90deg, #2498dc, #ff8300);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
+  text-shadow: 0 0 20px rgba(36, 152, 220, 0.3);
+  position: relative;
+  padding-bottom: 1rem;
+}
+
+.calendar-title::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 120px;
+  height: 3px;
+  background: linear-gradient(90deg, #2498dc, #ff8300);
+  box-shadow: 0 0 10px rgba(36, 152, 220, 0.5);
 }
 
 .calendar-description {
+  color: rgba(255, 255, 255, 0.9);
+  max-width: 600px;
+  margin: 0 auto 2rem auto;
   font-size: 1.1rem;
-  color: rgba(255, 255, 255, 0.8);
-  margin-bottom: 2rem;
+  line-height: 1.6;
 }
 
-.calendar-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 2rem;
+/* Dynamic Events Grid */
+#calendar-events {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  padding: 1rem 0;
 }
 
-/* === Event Cards === */
+/* Dynamic Event Cards */
 .event-card {
-  background-color: rgba(255, 255, 255, 0.05);
-  border-radius: 16px;
+  background: linear-gradient(
+    135deg,
+    rgba(36, 152, 220, 0.05) 0%,
+    rgba(26, 26, 26, 0.9) 50%,
+    rgba(255, 131, 0, 0.05) 100%
+  );
+  border-radius: 15px;
+  box-shadow: 0 0 15px rgba(36, 152, 220, 0.2);
   padding: 1.5rem;
-  width: 100%;
-  max-width: 350px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  text-align: left;
-  transition: transform 0.3s ease;
-}
-
-.event-card:hover {
-  transform: translateY(-5px);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .event-card h3 {
-  font-size: 1.6rem;
+  margin-top: 0;
   color: #2498dc;
+  font-family: "Nasalization", sans-serif;
   margin-bottom: 0.5rem;
 }
 
-.event-card p,
-.event-card time {
-  font-size: 1rem;
-  color: rgba(255, 255, 255, 0.9);
-  margin-bottom: 0.5rem;
+.event-card p {
+  font-size: 0.9rem;
+  line-height: 1.4;
+  margin-bottom: 1rem;
+  color: rgba(255, 255, 255, 0.85);
 }
 
-/* === Add to Calendar Button === */
-.add-to-calendar-button {
-  display: inline-block;
-  margin-top: 0.75rem;
-  padding: 0.6rem 1.2rem;
-  background-color: #2498DC;
-  color: #fff;
-  text-decoration: none;
-  font-weight: 600;
+/* Add to Calendar Button */
+.add-calendar-btn {
+  align-self: flex-start;
+  background: #2498dc;
+  border: none;
+  padding: 0.5rem 1rem;
   border-radius: 8px;
-  transition: background-color 0.3s ease, transform 0.2s ease;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  text-decoration: none;
+  display: inline-block;
 }
 
-.add-to-calendar-button:hover {
-  background-color: #1973aa;
-  transform: translateY(-2px);
+.add-calendar-btn:hover {
+  background: #1b7ec6;
 }
 
-/* === Social Media Sidebar === */
+/* Social Icons Fixed on right with white border */
 .social-icons {
   position: fixed;
   top: 50%;
-  right: 0;
+  right: 1rem;
   transform: translateY(-50%);
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
-  padding: 0.5rem;
-  z-index: 9999;
+  gap: 1rem;
+  z-index: 1000;
 }
 
 .social-icons a {
-  display: inline-block;
-  background-color: white;
-  padding: 6px;
+  display: flex;
+  width: 48px;
+  height: 48px;
   border: 2px solid white;
   border-radius: 50%;
-  transition: transform 0.2s ease;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  transition: background 0.3s ease, border-color 0.3s ease;
 }
 
 .social-icons a:hover {
-  transform: scale(1.1);
+  background: #2498dc;
+  border-color: #2498dc;
 }
 
 .social-icons img {
-  width: 26px;
-  height: 26px;
-  display: block;
+  width: 24px;
+  height: 24px;
+  filter: invert(1);
+  transition: filter 0.3s ease;
 }
 
-/* === Responsive === */
+.social-icons a:hover img {
+  filter: invert(0);
+}
+
+/* Responsive Social Icons */
 @media (max-width: 768px) {
-  .calendar-container {
-    flex-direction: column;
-    align-items: center;
+  .social-icons {
+    right: 0.5rem;
+    gap: 0.75rem;
   }
-
-  .event-card {
-    max-width: 90%;
+  .social-icons a {
+    width: 40px;
+    height: 40px;
   }
-
-  .outreach-feature {
-    flex-direction: column !important;
+  .social-icons img {
+    width: 20px;
+    height: 20px;
   }
 }

@@ -7,18 +7,11 @@
   <meta name="theme-color" content="#2498DC" />
   <link rel="shortcut icon" href="assets/frc1912.ico" />
   <title>Outreach - Team 1912 Combustion</title>
-
-  <!-- CSS -->
   <link rel="stylesheet" href="css/style.css" />
   <link rel="stylesheet" href="css/outreach.css" />
   <link rel="stylesheet" href="css/animations.css" />
-
-  <!-- ScrollReveal -->
   <script src="https://unpkg.com/scrollreveal@4.1.0/dist/scrollreveal.min.js" defer></script>
-
-  <!-- Main JS -->
   <script src="js/main.js" defer></script>
-  <!-- Your Calendar Events JS -->
   <script src="js/calendar.js" defer></script>
 </head>
 <body>
@@ -43,7 +36,7 @@
     </div>
   </header>
 
-  <!-- Social Icons Sidebar on Right -->
+  <!-- Social icons on the right -->
   <div class="social-icons">
     <a href="https://www.facebook.com/FRC1912" target="_blank" title="Facebook">
       <img src="assets/websites/facebook.png" alt="Facebook" />
@@ -72,39 +65,60 @@
         </p>
       </div>
 
-      <!-- Outreach Photo Sections -->
       <section class="about-section outreach-feature">
         <div class="section-image">
-          <img
-            src="assets/static/photos/women in stem day group photo.jpg"
-            alt="Women in STEM Day group photo"
-            class="feature-image"
-          />
+          <img src="assets/static/photos/women in stem day group photo.jpg" alt="Women in STEM Day group photo" class="feature-image" />
         </div>
       </section>
 
       <section class="about-section outreach-feature">
         <div class="section-content">
           <h2>A Learning Experience</h2>
-          <p>
-            Students explore science and engineering with our team's guidance and encouragement, making STEM fun and
-            accessible for all ages.
-          </p>
+          <p>Students explore science and engineering with our team's guidance and encouragement, making STEM fun and accessible for all ages.</p>
         </div>
         <div class="section-image">
           <img src="assets/static/photos/kids.jpg" alt="Students doing science activity" class="feature-image" />
         </div>
       </section>
 
-      <!-- Upcoming Events Section (Events Inserted Dynamically) -->
+      <!-- Outreach static cards -->
+      <div class="outreach-grid">
+        <div class="outreach-card">
+          <div class="outreach-image">
+            <img src="assets/static/outreach/stem-education.jpg" alt="STEM Education Programs" />
+          </div>
+          <div class="outreach-content">
+            <h2>STEM Education</h2>
+            <p>We organize workshops, demonstrations, and hands-on activities to introduce students to robotics, programming, and engineering principles.</p>
+          </div>
+        </div>
+
+        <div class="outreach-card">
+          <div class="outreach-image">
+            <img src="assets/static/outreach/mentorship.jpg" alt="Mentorship Programs" />
+          </div>
+          <div class="outreach-content">
+            <h2>Mentorship Programs</h2>
+            <p>Our team members mentor FLL and FTC teams, helping younger students develop their STEM skills and fostering their interest in robotics.</p>
+          </div>
+        </div>
+
+        <div class="outreach-card">
+          <div class="outreach-image">
+            <img src="assets/static/outreach/community.jpg" alt="Community Events" />
+          </div>
+          <div class="outreach-content">
+            <h2>Community Events</h2>
+            <p>We participate in local events, fairs, and demonstrations to share our passion for robotics and inspire others to get involved in STEM.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Dynamic calendar events -->
       <section class="calendar-section">
         <h2 class="calendar-title">Upcoming Events</h2>
-        <p class="calendar-description">
-          Stay updated with our latest outreach events, competitions, and community activities.
-        </p>
-        <div id="calendar-events" class="calendar-container">
-          <!-- Event cards will be injected here by JS -->
-        </div>
+        <p class="calendar-description">Stay updated with our latest outreach events, competitions, and community activities.</p>
+        <div id="calendar-events"></div>
       </section>
     </section>
   </main>
@@ -112,8 +126,7 @@
   <footer>
     <img src="assets/static/1912.png" alt="Team 1912 Logo" class="footer-logo" />
     <p>&copy; 2025 FIRST Robotics Team 1912 - Combustion. All rights reserved.</p>
-    <p>
-      Contact us at
+    <p>Contact us at
       <a href="mailto:team1912combustion@gmail.com">team1912combustion@gmail.com</a>
     </p>
   </footer>
