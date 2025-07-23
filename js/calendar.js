@@ -5,24 +5,29 @@ const calendarEventsContainer = document.getElementById('calendar-events');
 const loadMoreBtn = document.getElementById('load-more-btn');
 const noMoreMsg = document.getElementById('no-more-msg');
 
-const EVENTS_PER_PAGE = 6;
 let allEvents = [];
-let currentCount = 0;
+let displayedCount = 0;
+const EVENTS_PER_LOAD = 6;
 
-function formatDateForDisplay(dateString) {
-  const options = { 
-    weekday: 'short', month: 'short', day: 'numeric', year: 'numeric', 
-    hour: '2-digit', minute: '2-digit', hour12: true 
-  };
-  const date = new Date(dateString);
-  return date.toLocaleString('en-US', options);
-}
+async function fetchCalendarEvents() {
+  const url = `https://www.googleapis.com/calendar/v3/calendars/${encodeURIComponent(calendarId)}/events?key=${apiKey}&orderBy=startTime&singleEvents=true&timeMin=${new Date().toISOString()}`;
 
-function formatDateForGoogleCalendar(dateString) {
-  if (!dateString) return '';
-  const d = new Date(dateString);
-  // Format to YYYYMMDDTHHmmssZ, removing hyphens, colons, milliseconds
-  return d.toISOString().replace(/[-:]|\.\d{3}/g, '');
+  try {
+    const response = await fetch(url);
+    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+    const data = await response.json();
+    allEvents = data.items || [];
+    displayedCount = 0;
+    calendarEventsContainer.innerHTML = '';
+    noMoreMsg.style.display = 'none';
+    loadMoreBtn.style.display = 'inline-block';
+    loadMoreEvents();
+  } catch (error) {
+    console.error('Failed to fetch calendar events:', error);
+    calendarEventsContainer.innerHTML = '<p style="color:#ff6666;">Failed to load events.</p>';
+    loadMoreBtn.style.display = 'none';
+    noMoreMsg.style.display = 'none';
+  }
 }
 
 function createAddToCalendarLink(event) {
@@ -32,8 +37,15 @@ function createAddToCalendarLink(event) {
   const details = encodeURIComponent(event.description || '');
   const location = encodeURIComponent(event.location || '');
 
-  const startFormatted = formatDateForGoogleCalendar(start);
-  const endFormatted = formatDateForGoogleCalendar(end);
+  function formatDate(dateString) {
+    if (!dateString) return '';
+    const d = new Date(dateString);
+    // Format YYYYMMDDTHHmmssZ without punctuation for Google Calendar URL
+    return d.toISOString().replace(/[-:]|\.\d{3}/g, '');
+  }
+
+  const startFormatted = formatDate(start);
+  const endFormatted = formatDate(end);
 
   return `https://www.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${startFormatted}/${endFormatted}&details=${details}&location=${location}&sf=true&output=xml`;
 }
@@ -43,7 +55,7 @@ function cleanDescription(description) {
   return description.replace(/powered by Google Calendar/i, '').trim();
 }
 
-function createEventCard(event) {
+function renderEventCard(event) {
   const card = document.createElement('div');
   card.classList.add('event-card');
 
@@ -51,7 +63,13 @@ function createEventCard(event) {
   title.textContent = event.summary || 'Untitled Event';
 
   const date = document.createElement('p');
-  date.textContent = formatDateForDisplay(event.start.dateTime || event.start.date);
+  const start = event.start.dateTime || event.start.date;
+  const startDate = new Date(start);
+  const options = { 
+    weekday: 'short', month: 'short', day: 'numeric', year: 'numeric', 
+    hour: '2-digit', minute: '2-digit', hour12: true 
+  };
+  date.textContent = startDate.toLocaleString('en-US', options);
 
   const location = document.createElement('p');
   location.textContent = event.location || '';
@@ -75,52 +93,26 @@ function createEventCard(event) {
   return card;
 }
 
-function renderEvents() {
-  calendarEventsContainer.innerHTML = '';
-  const eventsToShow = allEvents.slice(0, currentCount);
-  eventsToShow.forEach(event => {
-    calendarEventsContainer.appendChild(createEventCard(event));
+function loadMoreEvents() {
+  const nextBatch = allEvents.slice(displayedCount, displayedCount + EVENTS_PER_LOAD);
+  nextBatch.forEach(event => {
+    const card = renderEventCard(event);
+    calendarEventsContainer.appendChild(card);
   });
-}
+  displayedCount += nextBatch.length;
 
-function updateNoMoreMessage() {
-  if (currentCount >= allEvents.length) {
+  // Always show button
+  loadMoreBtn.style.display = 'inline-block';
+
+  if (displayedCount >= allEvents.length) {
+    loadMoreBtn.style.display = 'none';
     noMoreMsg.style.display = 'block';
-  } else {
-    noMoreMsg.style.display = 'none';
   }
 }
 
 loadMoreBtn.addEventListener('click', () => {
-  if (currentCount < allEvents.length) {
-    currentCount = Math.min(currentCount + EVENTS_PER_PAGE, allEvents.length);
-    renderEvents();
-    updateNoMoreMessage();
-  } else {
-    updateNoMoreMessage();
-  }
+  loadMoreEvents();
 });
 
-async function fetchCalendarEvents() {
-  const url = `https://www.googleapis.com/calendar/v3/calendars/${encodeURIComponent(calendarId)}/events?key=${apiKey}&orderBy=startTime&singleEvents=true&timeMin=${new Date().toISOString()}`;
-
-  try {
-    const response = await fetch(url);
-    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-    const data = await response.json();
-    allEvents = data.items || [];
-    currentCount = Math.min(EVENTS_PER_PAGE, allEvents.length);
-    renderEvents();
-    updateNoMoreMessage();
-
-    // Always show the button, even if no more events
-    loadMoreBtn.style.display = 'inline-block';
-  } catch (error) {
-    console.error('Failed to fetch calendar events:', error);
-    calendarEventsContainer.innerHTML = '<p style="color:#ff6666;">Failed to load events.</p>';
-    loadMoreBtn.style.display = 'none';
-    noMoreMsg.style.display = 'none';
-  }
-}
-
+// Initial fetch
 fetchCalendarEvents();
