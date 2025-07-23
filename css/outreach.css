@@ -353,3 +353,25 @@
     background-color: #1c7db6;
     transform: scale(1.05);
 }
+
+.calendar-load-controls {
+    text-align: center;
+    margin-top: 2rem;
+}
+
+.calendar-sync-button {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    background-color: #2498DC;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.calendar-sync-button:hover {
+    background-color: #1b78af;
+}
