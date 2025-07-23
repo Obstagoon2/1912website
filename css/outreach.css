@@ -256,7 +256,7 @@
 
 /* Add to Calendar Button */
 .add-calendar-btn {
-  align-self: flex-start;
+  align-self: center;
   background: #2498dc;
   border: none;
   padding: 0.5rem 1rem;
