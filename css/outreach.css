@@ -328,3 +328,25 @@
     grid-template-columns: 1fr;
   }
 }
+/* Sync calendar button */
+.calendar-sync {
+    text-align: center;
+    margin: 3rem 0;
+}
+
+.sync-button {
+    display: inline-block;
+    background-color: #2498DC;
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border: 2px solid white;
+    border-radius: 6px;
+    font-size: 1rem;
+    text-decoration: none;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.sync-button:hover {
+    background-color: #1c7db6;
+    transform: scale(1.05);
+}
