@@ -38,7 +38,9 @@ function formatDateTime(dateString) {
 
 function cleanDescription(description) {
   if (!description) return '';
-  return description.replace(/powered by Google Calendar/i, '').trim();
+  const cutoff = description.indexOf("You can see the RSVP status");
+  let cleaned = cutoff !== -1 ? description.substring(0, cutoff) : description;
+  return cleaned.replace(/powered by Google Calendar/i, '').trim();
 }
 
 function createAddToCalendarLink(event) {
