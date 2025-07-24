@@ -269,7 +269,7 @@ header {
 .sponsor-logo:hover { transform: translateY(-5px); }
 
 /* Social Media Icons */
-.socail-icons {
+.social-icons {
     position: fixed;
     top: calc(var(--header-height) + 1rem);
     right: 1rem;
@@ -279,7 +279,7 @@ header {
     z-index: 999;
 }
 
-.socail-icons a {
+.social-icons a {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -290,9 +290,9 @@ header {
     transition: transform 0.3s ease;
 }
 
-.socail-icons a:hover { transform: scale(1.1); }
+.social-icons a:hover { transform: scale(1.1); }
 
-.socail-icons img {
+.social-icons img {
     width: 24px;
     height: 24px;
     object-fit: contain;
