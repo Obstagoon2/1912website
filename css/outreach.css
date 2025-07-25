@@ -34,6 +34,7 @@
   animation: gradientMove 20s ease-in-out infinite alternate;
 }
 
+/* Updated Section Title */
 .section-title,
 .page-header h1 {
   text-align: center;
@@ -256,7 +257,7 @@
 
 /* Add to Calendar Button */
 .add-calendar-btn {
-  align-self: center;  /* centers button horizontally within flex column */
+  align-self: center;
   background: #2498dc;
   border: none;
   padding: 0.5rem 1rem;
@@ -273,7 +274,7 @@
   background: #1b7ec6;
 }
 
-/* Social Media Icons */
+/* ✅ Updated Social Media Icons */
 .social-icons {
   position: fixed;
   top: calc(var(--header-height) + 1rem);
@@ -288,16 +289,18 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 36px;
-  height: 36px;
-  background: rgba(255, 255, 255, 0.9);
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, rgba(36,152,220,0.2), rgba(255,131,0,0.2));
   border-radius: 50%;
   border: 2px solid white;
-  transition: transform 0.3s ease;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  backdrop-filter: blur(4px);
 }
 
 .social-icons a:hover {
-  transform: scale(1.1);
+  transform: scale(1.15);
+  box-shadow: 0 0 10px rgba(255,131,0,0.25), 0 0 10px rgba(36,152,220,0.25);
 }
 
 .social-icons img {
@@ -306,15 +309,14 @@
   object-fit: contain;
 }
 
-/* Responsive Social Icons */
 @media (max-width: 768px) {
   .social-icons {
     right: 0.5rem;
     gap: 0.75rem;
   }
   .social-icons a {
-    width: 40px;
-    height: 40px;
+    width: 36px;
+    height: 36px;
   }
   .social-icons img {
     width: 20px;
@@ -328,55 +330,38 @@
     grid-template-columns: 1fr;
   }
 }
+
 .calendar-sync {
-    display: flex;
-    justify-content: center;
-    margin-top: 3rem;
-    margin-bottom: 2rem;
+  display: flex;
+  justify-content: center;
+  margin-top: 3rem;
+  margin-bottom: 2rem;
 }
 
 .calendar-sync-button {
-    background-color: #2498DC;
-    color: #fff;
-    padding: 0.75rem 1.5rem;
-    border: none;
-    border-radius: 6px;
-    font-size: 1rem;
-    font-weight: 600;
-    text-decoration: none;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-    cursor: pointer;
+  background-color: #2498dc;
+  color: #fff;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
 }
 
 .calendar-sync-button:hover {
-    background-color: #1c7db6;
-    transform: scale(1.05);
+  background-color: #1c7db6;
+  transform: scale(1.05);
 }
 
 .calendar-load-controls {
-    text-align: center;
-    margin-top: 2rem;
+  text-align: center;
+  margin-top: 2rem;
 }
 
-.calendar-sync-button {
-    display: inline-block;
-    padding: 0.75rem 1.5rem;
-    background-color: #2498DC;
-    color: white;
-    border: none;
-    border-radius: 6px;
-    font-size: 1rem;
-    text-decoration: none;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-.calendar-sync-button:hover {
-    background-color: #1b78af;
-}
-
-/* Center the Load More Events button */
 #load-more-btn {
   display: block;
   margin: 2rem auto 0;
